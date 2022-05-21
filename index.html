@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/73cdce8bb8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Powertech Gaming</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <img src="./img/Logo.png" alt="Logo" id="logo">
+            <h1>Powertech Gaming</h1>
+        </header>
+
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Armá tu PC</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Categorías
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Procesadores</a></li>
+                                <li><a class="dropdown-item" href="#">Placas de video</a></li>
+                                <li><a class="dropdown-item" href="#">Motherboard</a></li>
+                                <li><a class="dropdown-item" href="#">Memorias RAM</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <aside>
+            <form class="formBusqueda">
+                <input id="barraBusqueda" placeholder="Buscar por nombre">
+                <button class="btn-accion" type="submit">Buscar</button>
+            </form>
+            <section id="contFiltros">
+                <article>
+                    <form>
+                        <fieldset class="filtros">
+                            <legend>Categorías:</legend>
+                            <label for="CPU_AMD">
+                                <input type="radio" id="CPU_AMD" name="producto" value="CPU_AMD">
+                                CPU AMD
+                            </label>
+                            <label for="CPU_Intel">
+                                <input type="radio" id="CPU_Intel" name="producto" value="CPU_Intel">
+                                CPU Intel
+                            </label>
+                            <label for="Mother_Intel">
+                                <input type="radio" id="Mother_Intel" name="producto" value="Mother_Intel">
+                                Mother Intel
+                            </label>
+                            <label for="Mother_AMD">
+                                <input type="radio" id="Mother_AMD" name="producto" value="Mother_AMD">
+                                Mother AMD
+                            </label>
+                            <label for="GPU_Nvidia">
+                                <input type="radio" id="GPU_Nvidia" name="producto" value="GPU_Nvidia">
+                                GPU Nvidia
+                            </label>
+                            <label for="GPU_AMD">
+                                <input type="radio" id="GPU_AMD" name="producto" value="GPU_AMD">
+                                GPU AMD
+                            </label>
+                            <label for="RAM">
+                                <input type="radio" id="RAM" name="producto" value="RAM">
+                                Memoria RAM
+                            </label>
+                            <button class="btn-accion btn-filtro" type="submit">Aplicar</button>
+                        </fieldset>
+                    </form>
+                    <form>
+                        <fieldset class="filtros">
+                            <legend>Rango de precio:</legend>
+                            <label for="CPU_AMD">
+                                Mínimo:
+                                <input type="range" id="CPU_AMD" name="producto" value="5000" min="5000" max="400000">
+                            </label>
+                            <output></output>
+                            <label for="CPU_Intel">
+                                Máximo:
+                                <input type="range" id="CPU_Intel" name="producto" value="400000" min="5000"
+                                    max="400000">
+                            </label>
+                            <output></output>
+                            <button class="btn-accion btn-filtro" type="submit">Aplicar</button>
+                        </fieldset>
+                    </form>
+                </article>
+            </section>
+        </aside>
+
+        <main>
+            <button onclick="topFunction()" id="toTop"><img src="./img/up-arrow.png" id="img-toTop"></button>
+            <h2 class="subtSeccion">Productos destacados</h2>
+            <section class="SecMain">
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/i3.jpg" alt="Procesador i3" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Intel Core i3 12100 S1700</p>
+                        <p class="precioProd">$25000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/i5.jpg" alt="Procesador i5" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Intel Core i5 12400 S1700</p>
+                        <p class="precioProd">$38000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/i7.jpg" alt="Procesador i7" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Intel Core i7 12700K S1700</p>
+                        <p class="precioProd">$70000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/i9.jpg" alt="Procesador i9" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Intel Core i9 12900k S1700</p>
+                        <p class="precioProd">$100000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/Ryzen5600.jpg" alt="Procesador Ryzen5600" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Ryzen 5 5600</p>
+                        <p class="precioProd">$32000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/Ryzen5800x.jpg" alt="Procesador Ryzen5800x" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Ryzen 7 5800x</p>
+                        <p class="precioProd">$55000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/Ryzen5800x3d.jpg" alt="Procesador Ryzen5800x3d"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Ryzen 7 5800x3D</p>
+                        <p class="precioProd">$75000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/Ryzen5900x.jpg" alt="Procesador Ryzen5900x" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Ryzen 9 5900x</p>
+                        <p class="precioProd">$68000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Procesadores/Ryzen5950x.jpg" alt="Procesador Ryzen5950x" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Procesador Ryzen 9 5950x</p>
+                        <p class="precioProd">$90000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_MSI_RTX3070TI.jpg" alt="GPU MSI RTX3070TI"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia MSI RTX 3070TI</p>
+                        <p class="precioProd">$150000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_ZOTAC_RTX3070TI.jpg" alt="GPU ZOTAC RTX3070TI"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia ZOTAC RTX 3070TI</p>
+                        <p class="precioProd">$150000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_ASUS_RTX3080TI.jpg" alt="GPU ASUS RTX3080TI"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia ASUS RTX 3080TI</p>
+                        <p class="precioProd">$250000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_MSI_RTX3080ti.jpg" alt="GPU MSI RTX3080TI"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia MSI RTX 3080TI</p>
+                        <p class="precioProd">$250000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_ASUS_RTX3090.jpg" alt="GPU ASUS RTX3090"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia ASUS RTX 3090</p>
+                        <p class="precioProd">$400000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Placas/GPU_Nvidia_MSI_RTX3090.jpg" alt="GPU MSI RTX3090" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Placa de video Nvidia MSI RTX 3090</p>
+                        <p class="precioProd">$400000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_Intel_GigaZ690Aorus.jpg"
+                        alt="Mother Intel Gigabyte Z690" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard Intel Gigabyte Aorus Z690 </p>
+                        <p class="precioProd">$100000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_Intel_MSIZ690Unify.jpg" alt="Mother Intel MSI Z690"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard Intel MSI Unify Z690 </p>
+                        <p class="precioProd">$110000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_Intel_RogMaxZ690.jpg" alt="Mother Intel ASUS Z690"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard Intel ASUS ROG Z690 </p>
+                        <p class="precioProd">$130000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_AMD_MSIX570SEdge.jpg" alt="Mother AMD MSI X570"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard AMD MSI X570 </p>
+                        <p class="precioProd">$100000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_AMD_GigaX570SAorus.jpg" alt="Mother AMD Gigabyte X570"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard AMD Gigabyte Aorus X570 </p>
+                        <p class="precioProd">$110000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/Motherboard/Mother_AMD_AsusX570CrosshairVIII.jpg"
+                        alt="Mother AMD ASUS X570" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Motherboard AMD ASUS Crosshair X570 </p>
+                        <p class="precioProd">$13000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/RAM/RAMDDR4_Team4GB.jpg" alt="RAM DDR4 Team 4gb 2400" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Memoria RAM DDR4 Team 4gb 2400mhz </p>
+                        <p class="precioProd">$5000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/RAM/RAMDDR4_ADATA16GB3200.jpg" alt="RAM DDR4 ADATA 16GB 3200"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Memoria RAM DDR4 ADATA 16gb 3200mhz</p>
+                        <p class="precioProd">$12000</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/RAM/RAMDDR4_ADATA16GB3600.jpg" alt="RAM DDR4 ADATA 16GB 3600"
+                        class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Memoria RAM DDR4 ADATA 16gb 3600mhz</p>
+                        <p class="precioProd">$13500</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+                <article class="contProducto">
+                    <img src="./img/Productos/RAM/RAMDDR5_Team32GB.jpg" alt="RAM DDR5 Team 32GB 5600" class="imgProd">
+                    <div class="contInfoProd">
+                        <p class="nombreProd">Memoria RAM DDR5 Team 32gb 5600mhz</p>
+                        <p class="precioProd">$13500</p>
+                    </div>
+                    <button type="button" class="btn-comprar">Sumar al carrito</button>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            <div id="footContacto">
+                <h3>Contactanos</h3>
+                <p>5555-5555</p>
+                <p><a href="#">info@powertech.com</a></p>
+                <p>Calle Falsa 123</p>
+            </div>
+
+            <div id="footRedes">
+                <h3>Redes sociales</h3>
+                <div id="Container_Redes">
+                    <a href="#"><img src="./img/facebook.png" alt="Logo de facebook" class="logosRedes"></a>
+                    <a href="#"><img src="./img/instagram.png" alt="Logo de instagram" class="logosRedes"></a>
+                    <a href="#"><img src="./img/twitter.png" alt="Logo de twitter" class="logosRedes"></a>
+                </div>
+            </div>
+
+            <div id="footCopy">
+                <p>Copyright &copy; Powertech Gaming 2022</p>
+            </div>
+        </footer>
+    </div>
+    <script src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
