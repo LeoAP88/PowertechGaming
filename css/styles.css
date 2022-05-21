@@ -22,11 +22,10 @@ a{
     display: grid;
     grid-template-areas:
     "header"
-    "nav"
     "aside"
     "main"
     "footer";
-    grid-template-rows: 150px auto auto 1fr 280px;
+    grid-template-rows: 150px auto 1fr 280px;
     min-height: 100vh;
     background-color: white;
 }
@@ -40,6 +39,7 @@ header{
     justify-content: center;
     background-color: rgb(82, 82, 82);
     color: white;
+    margin-bottom: 15px;
 }
 
 #logo{
@@ -49,34 +49,6 @@ header{
 
 h1{
     font-size: 3rem;
-}
-
-/******* NAV ********/
-
-nav{
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    background-color: #aaaaaa;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-self: center;
-}
-
-.navUL{
-    display: flex;
-    align-content: center;
-}
-
-.navUL li{
-    list-style-type: none;
-    display: inline-block;
-    
-}
-
-
-.dropdown-item{
-    font-size: 1.2rem;
 }
 
 /******* ASIDE ********/
@@ -100,7 +72,6 @@ main{
     border: none;
     outline: none;
     cursor: pointer;
-
     border-radius: 10px;
 }
 
@@ -243,7 +214,7 @@ footer div{
 @media only screen and (min-width: 768px){
 
 #wrapper{
-    grid-template-rows: 150px auto auto 1fr 180px;
+    grid-template-rows: 150px auto 1fr 180px;
 }
 
 .SecMain{
@@ -295,12 +266,12 @@ body{
     margin: auto;
     grid-template-areas:
     "header header"
-    "nav nav"
     "aside main"
     "footer footer";
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto;
     grid-template-columns: 25% 75%;
 }
+
 
 #barraBusqueda{
     width: 60%;
