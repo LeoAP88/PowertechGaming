@@ -21,38 +21,38 @@ a {
 #wrapper {
     display: grid;
     grid-template-areas:
-        "header"
         "aside"
         "main"
         "footer";
-    grid-template-rows: 150px auto 1fr 280px;
-    min-height: 100vh;
+    grid-template-rows: auto auto auto;
     background-color: white;
 }
 
 /******* HEADER ********/
 
 header {
-    grid-area: header;
     background-color: rgb(82, 82, 82);
     color: white;
-    margin-bottom: 15px;
     text-align: center;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 120px;
 }
 
 #linkLogo {
     color: white;
     display: inline-block;
-    width: auto;
+    height: 80px;
 }
 
 #logo {
-    height: 90px;
-    width: 90px;
+    height: 80px;
+    width: 80px;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     display: inline;
 }
 
@@ -74,6 +74,7 @@ header div {
 
 aside {
     grid-area: aside;
+    margin-top: 15px;
 }
 
 /******* MAIN ********/
@@ -252,8 +253,12 @@ footer div {
 
 @media only screen and (min-width: 768px) {
 
-    #wrapper {
-        grid-template-rows: 150px auto 1fr 180px;
+    header {
+        height: 100px;
+    }
+
+    #linkLogo {
+        height: 60px;
     }
 
     .SecMain {
@@ -301,6 +306,18 @@ footer div {
         background-color: white;
     }
 
+    header {
+        height: 90px;
+    }
+
+    #linkLogo {
+        height: 50px;
+    }
+
+    #linkCarrito {
+        margin-right: 20px;
+    }
+
     #wrapper {
         max-width: 1300px;
         margin: auto;
@@ -308,7 +325,7 @@ footer div {
             "header header"
             "aside main"
             "footer footer";
-        grid-template-rows: 150px auto auto;
+        grid-template-rows: auto auto auto;
         grid-template-columns: 25% 75%;
     }
 
