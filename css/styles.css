@@ -37,7 +37,19 @@ header {
     position: sticky;
     top: 0;
     width: 100%;
-    height: 120px;
+    height: 80px;
+}
+
+#contHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#contCarrito{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #linkLogo {
@@ -54,11 +66,6 @@ header {
 h1 {
     font-size: 2.8rem;
     display: inline;
-}
-
-#linkCarrito {
-    margin-right: 10px;
-    display: inline-block;
 }
 
 header div {
@@ -253,14 +260,6 @@ footer div {
 
 @media only screen and (min-width: 768px) {
 
-    header {
-        height: 100px;
-    }
-
-    #linkLogo {
-        height: 60px;
-    }
-
     .SecMain {
         flex-direction: row;
         flex-wrap: wrap;
@@ -302,19 +301,27 @@ footer div {
 @media only screen and (min-width: 1024px) {
 
     body {
-        background-image: url("../img/bkg.jpg");
+        background-image: url("../img/bkg.png");
         background-color: white;
     }
 
     header {
         height: 90px;
+        display: flex;
+        justify-content: center;
     }
 
-    #linkLogo {
-        height: 50px;
+    #contHeader{
+        width: 1300px;
+        justify-content: space-between;
     }
 
-    #linkCarrito {
+    #contMarca{
+        display: flex;
+        align-items: center;
+    }
+
+    #contCarrito{
         margin-right: 20px;
     }
 
@@ -328,7 +335,6 @@ footer div {
         grid-template-rows: auto auto auto;
         grid-template-columns: 25% 75%;
     }
-
 
     #barraBusqueda {
         width: 60%;
