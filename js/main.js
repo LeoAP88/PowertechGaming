@@ -118,14 +118,12 @@ function obtenerValoresCheckbox() {
             valoresCheckbox.push(elem.value);
         }
     });
-    console.log(valoresCheckbox);
     return valoresCheckbox;
 }
 
 btnFiltro.onclick = (e) => {
     e.preventDefault();
     let seleccionados = obtenerValoresCheckbox();
-    console.log(seleccionados);
     if (seleccionados.length == 0) {
         mostrarProductos(productos);
     } else {
@@ -178,6 +176,27 @@ function actualizarCarrito() {
     precioTotal.innerText = carrito.reduce((acc, el) => acc + el.precio, 0)
 }
 
+//////////////////////////
+//// Finalizar compra ////
+//////////////////////////
+
+const btnFinalizar = document.getElementById('btn-finalizar');
+const main = document.getElementById('main');
+const productosComprados = document.getElementById('itemsCarrito');
+const aside = document.getElementById('aside');
+
+btnFinalizar.onclick = () => {
+    productosComprados.innerHTML = ``;
+    aside.innerHTML = ``;
+    main.innerHTML = `<div class="contMensajeCompra">
+                        <p class="mensajeCompra">Gracias, vuelva prontos</p>
+                        <div>
+                        `;
+    carrito.length = 0;
+    actualizarCarrito();
+
+}
+
 ////////////////////////////////////////////////////
 //// Ir al inicio cuando hay scrolling vertical ////
 ////////////////////////////////////////////////////
@@ -201,8 +220,10 @@ function irArriba() {
 }
 
 
+/////////////////////////////////// EN PROCESO ///////////////////////////////////
+
 ///////////////////////////////////
-/// Filtros por rango de precio ///             En proceso
+/// Filtros por rango de precio ///
 ///////////////////////////////////
 
 /*

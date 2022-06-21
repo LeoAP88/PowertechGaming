@@ -40,13 +40,13 @@ header {
     height: 80px;
 }
 
-#contHeader{
+#contHeader {
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-#contCarrito{
+#contCarrito {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,21 +77,21 @@ header div {
     height: 35px;
 }
 
-#contadorCarrito{
+#contadorCarrito {
     font-size: 2rem;
 }
 
-#offcanvasRight{
+#offcanvasRight {
     color: black;
-    
+
 }
 
-.offcanvas-title{
+.offcanvas-title {
     font-size: 2.5rem;
     margin-left: 80px;
 }
 
-.productoEnCarrito{
+.productoEnCarrito {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,21 +102,21 @@ header div {
     border-bottom: 2px solid black;
 }
 
-.boton-eliminar{
+.boton-eliminar {
     width: 30px;
     height: 30px;
-    
+
 }
 
-.offcanvas-body{
+.offcanvas-body {
     text-align: center;
 }
 
-.Total{
+.Total {
     font-size: 2rem;
 }
 
-.btn-finalizar{
+.btn-finalizar {
     width: auto;
     color: white;
     background-color: rgb(82, 82, 82);
@@ -125,7 +125,7 @@ header div {
     font-size: 1.5rem;
 }
 
-.imgProdCarrito{
+.imgProdCarrito {
     width: 100px;
     height: 100px;
 }
@@ -191,9 +191,7 @@ legend {
     margin-bottom: 20px;
 }
 
-.btn-filtro {
-    
-}
+.btn-filtro {}
 
 section {
     display: flex;
@@ -254,7 +252,7 @@ section {
     height: 30px;
 }
 
-.btn-comprar:disabled{
+.btn-comprar:disabled {
     background-color: white;
     color: black;
 }
@@ -262,6 +260,17 @@ section {
 .btn-comprar:hover:enabled,
 .btn-accion:hover:enabled {
     background-color: black;
+}
+
+.contMensajeCompra {
+    height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.mensajeCompra {
+    font-size: 3rem;
+    margin-left: 150px;
 }
 
 /******* FOOTER ********/
@@ -356,17 +365,17 @@ footer div {
         justify-content: center;
     }
 
-    #contHeader{
+    #contHeader {
         width: 1300px;
         justify-content: space-between;
     }
 
-    #contMarca{
+    #contMarca {
         display: flex;
         align-items: center;
     }
 
-    #contCarrito{
+    #contCarrito {
         margin-right: 20px;
     }
 
