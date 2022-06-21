@@ -9,7 +9,6 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/73cdce8bb8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/styles.css">
-    <script src="./js/toTop.js" async></script>
     <script src="./js/main.js" async></script>
     <title>Powertech Gaming</title>
 </head>
@@ -24,19 +23,24 @@
                     <h1>Powertech Gaming</h1>
                 </a>
             </div>
-            <div id="contCarrito">
+            <div id="contenedorCarrito">
                 <a id="linkCarrito" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                     aria-controls="offcanvasRight">
                     <img src="./img/Carrito.png" alt="Carrito de compras" id="imgCarrito">
                 </a>
+                <span id="contadorCarrito"></span>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel" style="color:black; font-size:4rem">Carrito</h5>
+                        <h3 class="offcanvas-title" id="offcanvasRightLabel">Carrito de compra
+                        </h3>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div class="offcanvas-body" style="color:black; font-size:3rem">
-                        Items...
+                    <div class="offcanvas-body">
+                        <div id="itemsCarrito">
+                        </div>
+                        <p class="Total">Precio total: $<span id="precioTotal">0</span></p>
+                        <button class="btn-finalizar">Finalizar compra</button>
                     </div>
                 </div>
             </div>
@@ -44,13 +48,12 @@
     </header>
     <div id="wrapper">
         <aside>
-            <form class="formBusqueda">
-                <input id="barraBusqueda" placeholder="Buscar por nombre">
-                <button class="btn-accion" id="btn-buscar" type="submit">Buscar</button>
-            </form>
+
+            <input id="barraBusqueda" placeholder="Buscar por nombre">
+
             <section id="contFiltros">
                 <article>
-                    <form>
+                    <form id="Checkbox">
                         <fieldset class="filtros">
                             <legend>Categorías:</legend>
                             <label for="CPU_AMD">
@@ -81,35 +84,37 @@
                                 <input type="checkbox" id="RAM" name="producto" value="RAM">
                                 Memoria RAM
                             </label>
-                            <button class="btn-accion btn-filtro" type="submit">Aplicar</button>
+                            <button class="btn-accion btn-filtro" type="submit" id="btn-filtrar">Aplicar</button>
                         </fieldset>
                     </form>
-                    <form>
+                    <!-- <form id="FiltroRango">
                         <fieldset class="filtros">
                             <legend>Rango de precio:</legend>
                             <label for="CPU_AMD">
                                 Mínimo:
-                                <input type="range" id="rangoMin" name="producto" value="5000" min="5000" max="400000">
+                                <input type="range" id="rangoMin" name="producto" value="5000" min="5000" max="400000"
+                                class="rangoMin" oninput="this.nextElementSibling.value = this.value">
+                                <output></output>
                             </label>
                             <output></output>
                             <label for="CPU_Intel">
                                 Máximo:
-                                <input type="range" id="rangoMax" name="producto" value="400000" min="5000"
-                                    max="400000">
+                                <input type="range" id="rangoMax" class="rangoMax" name="producto" value="400000" min="5000"
+                                    max="400000" oninput="this.nextElementSibling.value = this.value">
+                                    <output></output>
                             </label>
-                            <output></output>
+                            
                             <button class="btn-accion btn-filtro" type="submit">Aplicar</button>
                         </fieldset>
-                    </form>
+                    </form> -->
                 </article>
             </section>
         </aside>
 
         <main>
-            <button onclick="topFunction()" id="toTop"><img src="./img/up-arrow.png" id="img-toTop"></button>
+            <button id="toTop"><img src="./img/up-arrow.png" id="img-toTop"></button>
             <h2 class="subtSeccion">Productos destacados</h2>
             <section class="SecMain">
-
             </section>
         </main>
 
