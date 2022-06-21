@@ -194,7 +194,7 @@ btnFinalizar.onclick = () => {
                         `;
     carrito.length = 0;
     actualizarCarrito();
-
+    contadorCarrito.innerText = '';
 }
 
 ////////////////////////////////////////////////////
