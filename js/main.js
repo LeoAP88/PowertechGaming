@@ -18,16 +18,6 @@ class Producto {
 
 }
 
-/* Futura implementación
-
-class Inventario {
-    constructor(idprod, stock) {
-        this.idprod = idprod;
-        this.stock = stock;
-    }
-}
-*/
-
 /////////////////////////// OBJETOS ///////////////////////////
 
 const productos = [];
@@ -88,9 +78,6 @@ function mostrarProductos(listaProd) {
                             </div>
                             `;
 
-        /* Para agregar en el futuro al innerHTML
-        <input type="number" min="1" value="1" class="cantItem">
-        */
         mainSec.appendChild(contenedor);
 
         let btnAgregar = document.getElementById(`boton${el.idprod}`);
@@ -154,38 +141,6 @@ btnFiltro.onclick = (e) => {
     }
 };
 
-///////////////////////////////////
-/// Filtros por rango de precio ///
-///////////////////////////////////
-
-
-const precioMinimo = document.getElementById("rangoMin");
-const precioMaximo = document.getElementById("rangoMax");
-let menor = Math.min.apply(Math, productos.map(function(productos) { return productos.precio; }));
-let mayor = Math.max.apply(Math, productos.map(function(productos) { return productos.precio; }));
-
-const rango = document.querySelectorAll("#FiltroRango input");
-
-let rangoDif = 100;
-
-rango.forEach(input =>{
-    input.addEventListener('input', e =>{
-        let minVal = parseInt(rango[0].value);
-        let maxVal = parseInt(rango[1].value);
-
-        if(maxVal - minVal < rangoDif){
-            if(e.target.className === "rangoMin"){
-                rango[0].value = maxVal - rangoDif;
-            }
-            else{
-                rango[1].value = maxVal - rangoDif;
-            }
-        }
-    });
-});
-
-
-
 ////////////////////////////
 //// Carrito de compras ////
 ////////////////////////////
@@ -244,3 +199,37 @@ function irArriba() {
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
 }
+
+
+///////////////////////////////////
+/// Filtros por rango de precio ///             En proceso
+///////////////////////////////////
+
+/*
+
+const precioMinimo = document.getElementById("rangoMin");
+const precioMaximo = document.getElementById("rangoMax");
+let menor = Math.min.apply(Math, productos.map(function(productos) { return productos.precio; }));
+let mayor = Math.max.apply(Math, productos.map(function(productos) { return productos.precio; }));
+
+const rango = document.querySelectorAll("#FiltroRango input");
+
+let rangoDif = 100;
+
+rango.forEach(input =>{
+    input.addEventListener('input', e =>{
+        let minVal = parseInt(rango[0].value);
+        let maxVal = parseInt(rango[1].value);
+
+        if(maxVal - minVal < rangoDif){
+            if(e.target.className === "rangoMin"){
+                rango[0].value = maxVal - rangoDif;
+            }
+            else{
+                rango[1].value = maxVal - rangoDif;
+            }
+        }
+    });
+});
+
+*/
