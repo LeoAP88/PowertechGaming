@@ -1,8 +1,11 @@
 /////////////////////////// GLOBAL ///////////////////////////
 
 let carrito = []
+const mainSec = document.querySelector(".SecMain");
 const barraBuscar = document.getElementById("barraBusqueda");
-let mainSec = document.querySelector(".SecMain");
+const contadorCarrito = document.querySelector('#contadorCarrito');
+const contItemsCarrito = document.querySelector("#contItemsCarrito");
+const precioTotal = document.querySelector('#precioTotal');
 
 
 /////////////////////////// CLASES ///////////////////////////
@@ -15,7 +18,6 @@ class Producto {
         this.precio = parseFloat(precio);
         this.imagen = imagen;
     }
-
 }
 
 /////////////////////////// OBJETOS ///////////////////////////
@@ -51,44 +53,117 @@ productos.push(new Producto(7001, "Memoria RAM DDR4 ADATA 16gb 3200mhz", "RAM", 
 productos.push(new Producto(7002, "Memoria RAM DDR4 ADATA 16gb 3600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR4_ADATA16GB3600.jpg"));
 productos.push(new Producto(7003, "Memoria RAM DDR5 Team 32gb 5600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR5_Team32GB.jpg"));
 
-
-//////////////////////////////// DOM ////////////////////////////////
-
-mostrarProductos(productos);
-
 /////////////////////////// FUNCIONES ///////////////////////////
 
-// Mostrar el total de productos //
+/////////////////////////////////////
+//// Mostrar todos los productos ////
+/////////////////////////////////////
 
 function mostrarProductos(listaProd) {
-
     mainSec.innerHTML = ""
-
-    listaProd.forEach(el => {
+    listaProd.forEach(prod => {
         let contenedor = document.createElement("article");
         contenedor.classList.add('contProducto');
         contenedor.innerHTML = `
-                            <img src=${el.imagen} alt=${el.nombre} class="imgProd">
+                            <img src=${prod.imagen} alt=${prod.nombre} class="imgProd">
                             <div class="contInfoProd">
-                            <p class="nombreProd">${el.nombre}</p>
-                            <p class="precioProd">$ ${el.precio}</p>
-                            </div>
-                            <div class="contInfoCompra">
-                            <button type="button" class="btn-comprar" id="boton${el.idprod}">Comprar</button>
+                            <p class="nombreProd">${prod.nombre}</p>
+                            <p class="precioProd">$${prod.precio}</p>
                             </div>
                             `;
-
+                            
+        const contInfoCompra = document.createElement('div');
+        contInfoCompra.classList.add('contInfoCompra');
         mainSec.appendChild(contenedor);
+        contenedor.appendChild(contInfoCompra);
+        const btnComprar = document.createElement('button');
+        btnComprar.classList.add('btn-comprar');
+        btnComprar.textContent = ('Comprar');
+        btnComprar.setAttribute('prodID', prod.idprod);
+        contInfoCompra.appendChild(btnComprar);
+        btnComprar.addEventListener('click', agregarAlCarrito);
+    });
+}
 
-        let btnAgregar = document.getElementById(`boton${el.idprod}`);
-        btnAgregar.addEventListener('click', () => {
-            agregarAlCarrito(el.idprod);
-            btnAgregar.setAttribute('disabled', '');
-            btnAgregar.innerHTML = "Agotado";
-        })
+////////////////////////////
+//// Carrito de compras ////
+////////////////////////////
 
+function agregarAlCarrito(e) {
+    carrito.push(e.target.getAttribute('prodID'));
+    mostrarCarrito();
+}
+
+function mostrarCarrito() {
+    contItemsCarrito.textContent = '';
+    const carritoSinDuplicados = [...new Set(carrito)];
+    carritoSinDuplicados.forEach((item) => {
+        const miItem = productos.filter((prod) => {
+            return prod.idprod === parseInt(item);
+        });
+        const unidadesProd = carrito.reduce((total, itemId) => {
+            return itemId === item ? total += 1 : total;
+        }, 0);
+        let div = document.createElement('div')
+        div.setAttribute('class', 'productoEnCarrito')
+        div.innerHTML = `
+                        <img src=${miItem[0].imagen} alt=${miItem[0].nombre} class="imgProdCarrito">
+                        <p>${miItem[0].nombre}</p>
+                        <p>Cantidad: ${unidadesProd}</p>
+                        <p>Precio: $${miItem[0].precio}</p>
+                        `
+        const btnEliminar = document.createElement('button');
+        btnEliminar.classList.add('boton-eliminar', 'btn-danger');
+        btnEliminar.textContent = 'X';
+        btnEliminar.dataset.item = item;
+        btnEliminar.addEventListener('click', borrarItemCarrito);
+        div.appendChild(btnEliminar);
+        contItemsCarrito.appendChild(div);
     })
+    contadorCarrito.textContent = actualizarContadorCarrito()
+    precioTotal.textContent = calcularTotal()
+}
 
+function borrarItemCarrito(e) {
+    const id = e.target.dataset.item;
+    carrito = carrito.filter((carritoId) => {
+        return carritoId !== id;
+    });
+    mostrarCarrito();
+}
+
+function calcularTotal() {
+    return carrito.reduce((total, item) => {
+        const miItem = productos.filter((items) => {
+            return items.idprod === parseInt(item);
+        });
+        return total + miItem[0].precio;
+    }, 0);
+}
+
+function actualizarContadorCarrito() {
+    return carrito.length;
+}
+
+//////////////////////////
+//// Finalizar compra ////
+//////////////////////////
+
+const main = document.querySelector('#main');
+const btnFinalizar = document.querySelector('#btn-finalizar');
+const productosComprados = document.querySelector('#itemsCarrito');
+const aside = document.querySelector('#aside');
+
+btnFinalizar.onclick = () => {
+    contItemsCarrito.innerHTML = ``;
+    aside.innerHTML = ``;
+    main.innerHTML = `<div class="contMensajeCompra">
+                        <p class="mensajeCompra">Gracias, vuelva prontos</p>
+                        <div>
+                        `;
+    carrito.length = 0;
+    actualizarContadorCarrito();
+    contadorCarrito.innerText = '';
 }
 
 //////////////////////////////////////
@@ -139,64 +214,6 @@ btnFiltro.onclick = (e) => {
     }
 };
 
-////////////////////////////
-//// Carrito de compras ////
-////////////////////////////
-
-function agregarAlCarrito(id) {
-    let productoAgregado = productos.find(obj => obj.idprod === id)
-    carrito.push(productoAgregado);
-    mostrarCarrito(productoAgregado);
-    actualizarCarrito();
-}
-
-function mostrarCarrito(productoAgregado) {
-
-    let div = document.createElement('div')
-    div.setAttribute('class', 'productoEnCarrito')
-    div.innerHTML = `<img src=${productoAgregado.imagen} alt=${productoAgregado.nombre} class="imgProdCarrito">
-                    <p>${productoAgregado.nombre}</p>
-                    <p>Precio: $${productoAgregado.precio}</p>
-                    <button id="eliminar${productoAgregado.idprod}" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>`
-    itemsCarrito.appendChild(div)
-
-    let btnEliminar = document.getElementById(`eliminar${productoAgregado.idprod}`)
-    btnEliminar.addEventListener('click', () => {
-        btnEliminar.parentElement.remove();
-        carrito = carrito.filter(elemento => elemento.idprod !== productoAgregado.idprod)
-        actualizarCarrito()
-        let btnAgregar = document.getElementById(`boton${productoAgregado.idprod}`);
-        btnAgregar.removeAttribute('disabled', '');
-        btnAgregar.innerHTML = "Comprar";
-    })
-}
-
-function actualizarCarrito() {
-    contadorCarrito.innerText = carrito.length
-    precioTotal.innerText = carrito.reduce((acc, el) => acc + el.precio, 0)
-}
-
-//////////////////////////
-//// Finalizar compra ////
-//////////////////////////
-
-const btnFinalizar = document.getElementById('btn-finalizar');
-const main = document.getElementById('main');
-const productosComprados = document.getElementById('itemsCarrito');
-const aside = document.getElementById('aside');
-
-btnFinalizar.onclick = () => {
-    productosComprados.innerHTML = ``;
-    aside.innerHTML = ``;
-    main.innerHTML = `<div class="contMensajeCompra">
-                        <p class="mensajeCompra">Gracias, vuelva prontos</p>
-                        <div>
-                        `;
-    carrito.length = 0;
-    actualizarCarrito();
-    contadorCarrito.innerText = '';
-}
-
 ////////////////////////////////////////////////////
 //// Ir al inicio cuando hay scrolling vertical ////
 ////////////////////////////////////////////////////
@@ -219,38 +236,6 @@ function irArriba() {
     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
 }
 
+//////////////////////////////// PROGRAMA ////////////////////////////////
 
-/////////////////////////////////// EN PROCESO ///////////////////////////////////
-
-///////////////////////////////////
-/// Filtros por rango de precio ///
-///////////////////////////////////
-
-/*
-
-const precioMinimo = document.getElementById("rangoMin");
-const precioMaximo = document.getElementById("rangoMax");
-let menor = Math.min.apply(Math, productos.map(function(productos) { return productos.precio; }));
-let mayor = Math.max.apply(Math, productos.map(function(productos) { return productos.precio; }));
-
-const rango = document.querySelectorAll("#FiltroRango input");
-
-let rangoDif = 100;
-
-rango.forEach(input =>{
-    input.addEventListener('input', e =>{
-        let minVal = parseInt(rango[0].value);
-        let maxVal = parseInt(rango[1].value);
-
-        if(maxVal - minVal < rangoDif){
-            if(e.target.className === "rangoMin"){
-                rango[0].value = maxVal - rangoDif;
-            }
-            else{
-                rango[1].value = maxVal - rangoDif;
-            }
-        }
-    });
-});
-
-*/
+mostrarProductos(productos);

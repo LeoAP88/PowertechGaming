@@ -419,7 +419,7 @@ footer div {
     .contInfoProd {
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 350px;
     }
 
     aside {
