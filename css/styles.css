@@ -258,7 +258,17 @@ section {
     height: 30px;
 }
 
+.mensajeCarritoVacio{
+    text-align: center;
+    font-size: 2rem;
+}
+
 .btn-comprar:disabled {
+    background-color: white;
+    color: black;
+}
+
+#btn-finalizar:disabled{
     background-color: white;
     color: black;
 }

@@ -6,6 +6,8 @@ const barraBuscar = document.getElementById("barraBusqueda");
 const contadorCarrito = document.querySelector('#contadorCarrito');
 const contItemsCarrito = document.querySelector("#contItemsCarrito");
 const precioTotal = document.querySelector('#precioTotal');
+const pPrecioTotal = document.querySelector('.Total');
+const carritoBody = document.querySelector('.offcanvas-body');
 
 
 /////////////////////////// CLASES ///////////////////////////
@@ -71,7 +73,7 @@ function mostrarProductos(listaProd) {
                             <p class="precioProd">$${prod.precio}</p>
                             </div>
                             `;
-                            
+
         const contInfoCompra = document.createElement('div');
         contInfoCompra.classList.add('contInfoCompra');
         mainSec.appendChild(contenedor);
@@ -92,6 +94,7 @@ function mostrarProductos(listaProd) {
 function agregarAlCarrito(e) {
     carrito.push(e.target.getAttribute('prodID'));
     mostrarCarrito();
+    verificarEstadoCarrito();
 }
 
 function mostrarCarrito() {
@@ -130,6 +133,7 @@ function borrarItemCarrito(e) {
         return carritoId !== id;
     });
     mostrarCarrito();
+    verificarEstadoCarrito();
 }
 
 function calcularTotal() {
@@ -143,6 +147,22 @@ function calcularTotal() {
 
 function actualizarContadorCarrito() {
     return carrito.length;
+}
+
+const mensajeCarritoVacio = document.createElement('p');
+mensajeCarritoVacio.textContent = 'Agregue productos al carrito...';
+mensajeCarritoVacio.classList.add('mensajeCarritoVacio');
+
+function verificarEstadoCarrito(){
+    if (carrito.length == 0){
+        pPrecioTotal.setAttribute('style', 'display:none');
+        btnFinalizar.setAttribute('style', 'display:none');
+        contItemsCarrito.appendChild(mensajeCarritoVacio);
+    }
+    else{
+        pPrecioTotal.removeAttribute('style', 'display:none');
+        btnFinalizar.removeAttribute('style', 'display:none');
+    }
 }
 
 //////////////////////////
@@ -239,3 +259,4 @@ function irArriba() {
 //////////////////////////////// PROGRAMA ////////////////////////////////
 
 mostrarProductos(productos);
+verificarEstadoCarrito();
