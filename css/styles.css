@@ -289,6 +289,15 @@ section {
     font-size: 3rem;
 }
 
+#secResumenCompra{
+    width: 30%;
+}
+
+#formCompra{
+    width: 70%;
+}
+
+
 /******* FOOTER ********/
 
 footer {
@@ -404,10 +413,9 @@ footer div {
         max-width: 1300px;
         margin: auto;
         grid-template-areas:
-            "header header"
             "aside main"
             "footer footer";
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto;
         grid-template-columns: 25% 75%;
     }
 

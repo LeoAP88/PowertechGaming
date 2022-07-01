@@ -8,6 +8,13 @@ const contItemsCarrito = document.querySelector("#contItemsCarrito");
 const precioTotal = document.querySelector('#precioTotal');
 const pPrecioTotal = document.querySelector('.Total');
 const carritoBody = document.querySelector('.offcanvas-body');
+const btnVaciarCarrito = document.querySelector('#btnVaciar');
+const mensajeCarritoVacio = document.createElement('p');
+mensajeCarritoVacio.textContent = 'Agregue productos al carrito...';
+mensajeCarritoVacio.classList.add('mensajeCarritoVacio');
+const miLocalStorage = window.localStorage;
+const imagenCarrito = document.querySelector('#contenedorCarrito');
+const wrapper = document.querySelector('#wrapper');
 
 
 /////////////////////////// CLASES ///////////////////////////
@@ -93,8 +100,10 @@ function mostrarProductos(listaProd) {
 
 function agregarAlCarrito(e) {
     carrito.push(e.target.getAttribute('prodID'));
+    actualizarContadorCarrito()
     mostrarCarrito();
     verificarEstadoCarrito();
+    guardarCarritoEnLocalStorage();
 }
 
 function mostrarCarrito() {
@@ -123,7 +132,7 @@ function mostrarCarrito() {
         div.appendChild(btnEliminar);
         contItemsCarrito.appendChild(div);
     })
-    contadorCarrito.textContent = actualizarContadorCarrito()
+    actualizarContadorCarrito()
     precioTotal.textContent = calcularTotal()
 }
 
@@ -134,6 +143,7 @@ function borrarItemCarrito(e) {
     });
     mostrarCarrito();
     verificarEstadoCarrito();
+    guardarCarritoEnLocalStorage();
 }
 
 function calcularTotal() {
@@ -146,22 +156,44 @@ function calcularTotal() {
 }
 
 function actualizarContadorCarrito() {
-    return carrito.length;
+    contadorCarrito.textContent = carrito.length;
 }
 
-const mensajeCarritoVacio = document.createElement('p');
-mensajeCarritoVacio.textContent = 'Agregue productos al carrito...';
-mensajeCarritoVacio.classList.add('mensajeCarritoVacio');
-
-function verificarEstadoCarrito(){
-    if (carrito.length == 0){
+function verificarEstadoCarrito() {
+    if (carrito.length == 0) {
         pPrecioTotal.setAttribute('style', 'display:none');
         btnFinalizar.setAttribute('style', 'display:none');
+        btnVaciarCarrito.setAttribute('style', 'display:none');
         contItemsCarrito.appendChild(mensajeCarritoVacio);
     }
-    else{
+    else {
         pPrecioTotal.removeAttribute('style', 'display:none');
         btnFinalizar.removeAttribute('style', 'display:none');
+        btnVaciarCarrito.removeAttribute('style', 'display:none');
+    }
+}
+
+function vaciarCarrito() {
+    carrito = [];
+    mostrarCarrito();
+    verificarEstadoCarrito();
+    localStorage.clear();
+}
+
+btnVaciarCarrito.addEventListener('click', vaciarCarrito);
+
+///////////////////////
+//// Local Storage ////
+///////////////////////
+
+function guardarCarritoEnLocalStorage() {
+    miLocalStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function cargarCarritoDeLocalStorage() {
+    if (miLocalStorage.getItem('carrito') !== null) {
+        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
+        mostrarCarrito()
     }
 }
 
@@ -173,18 +205,60 @@ const main = document.querySelector('#main');
 const btnFinalizar = document.querySelector('#btn-finalizar');
 const productosComprados = document.querySelector('#itemsCarrito');
 const aside = document.querySelector('#aside');
+const subtitulo = document.querySelector('.subtSeccion');
+const secResumenCompra = document.querySelector('#secResumenCompra');
+const contenedorCompraFinalizada = document.querySelector('#contenedorCompraFinalizada');
 
+btnFinalizar.onclick = () => {
+    subtitulo.textContent = 'Información de la compra';
+    toTop.remove();
+    aside.remove();
+    mainSec.remove();
+    wrapper.style.gridTemplateAreas  = "main main"
+                                    "footer footer";
+    wrapper.style.gridTemplateColumns = "0fr 1fr";
+    contenedorCompraFinalizada.style.display = "flex";
+    contenedorCompraFinalizada.style.flexDirection = "row";
+    mainSec.setAttribute('style', 'display:none');
+    imagenCarrito.setAttribute('style', 'display:none');
+    const carritoSinDuplicados = [...new Set(carrito)];
+    carritoSinDuplicados.forEach((item) => {
+        const itemFinal = productos.filter((prod) => {
+            return prod.idprod === parseInt(item);
+        });
+        const unidadesProd = carrito.reduce((total, itemId) => {
+            return itemId === item ? total += 1 : total;
+        }, 0);
+        let div = document.createElement('div')
+        div.setAttribute('class', 'resumenCarrito')
+        div.innerHTML = `
+                        <img src=${itemFinal[0].imagen} alt=${itemFinal[0].nombre} class="imgProdCarrito">
+                        <p>${itemFinal[0].nombre}</p>
+                        <p>Cantidad: ${unidadesProd}</p>
+                        <p>Precio: $${itemFinal[0].precio}</p>
+                        `
+                        secResumenCompra.appendChild(div);
+    });
+
+    precioFinalResumen.textContent = calcularTotal();
+    
+}
+
+
+/*
 btnFinalizar.onclick = () => {
     contItemsCarrito.innerHTML = ``;
     aside.innerHTML = ``;
-    main.innerHTML = `<div class="contMensajeCompra">
-                        <p class="mensajeCompra">Gracias, vuelva prontos</p>
-                        <div>
-                        `;
+    main.innerHTML = `
+                    <div class="contMensajeCompra">
+                    <p class="mensajeCompra">Gracias, vuelva prontos</p>
+                    <div>
+                    `;
     carrito.length = 0;
     actualizarContadorCarrito();
     contadorCarrito.innerText = '';
 }
+*/
 
 //////////////////////////////////////
 /// Barra de busqueda de productos ///
@@ -258,5 +332,7 @@ function irArriba() {
 
 //////////////////////////////// PROGRAMA ////////////////////////////////
 
+actualizarContadorCarrito();
+cargarCarritoDeLocalStorage();
 mostrarProductos(productos);
 verificarEstadoCarrito();

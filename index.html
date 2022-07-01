@@ -40,8 +40,9 @@
                         <div id="contItemsCarrito">
                         </div>
                         <p class="Total">Precio total: $<span id="precioTotal">0</span></p>
-                        <button class="btn-finalizar" id="btn-finalizar" data-bs-dismiss="offcanvas">Finalizar
-                            compra</button>
+                        <button class="btn-finalizar" id="btnVaciar">Vaciar</button>
+                        <button class="btn-finalizar" id="btn-finalizar" data-bs-dismiss="offcanvas">Comprar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -117,6 +118,18 @@
             <h2 class="subtSeccion">Productos destacados</h2>
             <section class="SecMain">
             </section>
+            <div id="contenedorCompraFinalizada">
+                <section id="secResumenCompra">
+                    <article>
+                        <p class="Total">Precio total: $<span id="precioFinalResumen"></span></p>
+                    </article>
+                </section>
+                <form action="" id="formCompra">
+                    <input type="text">
+                    <input type="text">
+                    <input type="text">
+                </form>
+            </div>
         </main>
 
         <footer>
