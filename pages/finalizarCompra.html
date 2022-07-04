@@ -16,7 +16,7 @@
 
 <body>
 
-    <header>
+    <header id="headerFinal">
         <div id="contHeader">
             <div id="contMarca">
                 <a href="../index.html" id="linkLogo">
@@ -30,21 +30,21 @@
         <h2 class="subtSeccion">Información de la compra</h2>
         <main id="mainFinal">
             <section id="secResumenCompra">
-                <p class="TotalResumen">Precio Total: $<span id="precioFinalResumen"></span></p>
             </section>
+            <p class="TotalResumen">Precio Total: $<span id="precioFinalResumen"></span></p>
             <form action="" id="formCompra">
-                <legend>Datos Personales</legend>
+                <legend id="TituloformCompra">Datos Personales</legend>
                 <label for="nombre">Nombre</label>
-                <input type="text" class="inputDatos" name="nombre" required>
+                <input type="text" class="inputDatos" id="nombreCliente" value="Juan Carlos" name="nombre" required>
                 <label for="apellido">Apellido</label>
-                <input type="text" class="inputDatos" name="apellido" required>
+                <input type="text" class="inputDatos" id="apellidoCliente" value="Gonzalez" name="apellido" required>
                 <label for="email">Email</label>
-                <input type="email" class="inputDatos" name="email" required>
+                <input type="email" class="inputDatos" id="emailCliente" value="juancag@gmail.com" name="email" required>
                 <input type="submit" class ="btn btn-dark" id="confirmarCompra" value="Confirmar Compra">
             </form>
         </main>
 
-        <footer id="footerCompraFinal">
+        <!-- <footer id="footerCompraFinal">
             <div id="contSocial">
                 <div id="footContacto">
                     <h3>Contactanos</h3>
@@ -65,7 +65,7 @@
             <div id="footCopy">
                 <p>Copyright &copy; Powertech Gaming 2022</p>
             </div>
-        </footer>
+        </footer> -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"

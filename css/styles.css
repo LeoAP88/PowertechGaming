@@ -285,55 +285,73 @@ section {
 }
 
 .contMensajeCompra {
-    height: 500px;
+    margin-top: 50px;
+    text-align: center;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: center;   
 }
 
 .mensajeCompra {
-    font-size: 3rem;
+    font-size: 2rem;
+    width: 80%;
 }
 
 #mainFinal {
     display: flex;
+    flex-direction: column;
 }
 
 .TotalResumen {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 3px;
+    display: flex;
+    align-self: center;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    padding: 5px;
 }
 
 #secResumenCompra {
-    width: 50%;
     text-align: center;
     margin: auto;
 }
 
 .resumenCarrito {
     font-size: 1.3rem;
-    padding: 15px 2px;
+    padding: 8px 5px;
+    display: flex;
+    border-bottom: 1px solid gray;
+    column-gap: 25px;
+    text-align: center;
 }
 
 #formCompra {
-    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     text-align: center;
+    margin-bottom: 10px;
+}
+
+.imgProdResumen{
+    width: 50px;
+    height: 50px;
+}
+
+#TituloformCompra{
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 30px;
+    border-bottom: 1px solid black;
+    width: 50%;
 }
 
 .inputDatos {
     width: 150px;
     margin-bottom: 15px;
-}
-
-#formCompra textarea {
-    resize: none;
+    padding-left: 5px;
 }
 
 /******* FOOTER ********/
@@ -383,9 +401,6 @@ footer div {
     width: 25px;
 }
 
-#footerCompraFinal{
-}
-
 /******* MEDIA QUERIES *******/
 
 @media only screen and (min-width: 768px) {
@@ -415,6 +430,46 @@ footer div {
     #footContacto,
     #footRedes {
         border-bottom: none;
+    }
+
+    .TotalResumen{
+        font-size: 2rem;
+    }
+
+    .resumenCarrito {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 1.8rem;
+    }
+
+    #footerCompraFinal{
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+    }
+
+    #TituloformCompra{
+        margin-top: 50px;
+        width: 40%;
+        font-size: 2rem;
+    }
+
+    #formCompra {
+        font-size: 1.8rem;
+    }
+
+    .inputDatos{
+        width: 35%;
+        padding-left: 8px;
+    }
+
+    #confirmarCompra{
+        font-size: 1.5rem;
+    }
+
+    .mensajeCompra{
+        font-size: 2.8rem;
+        width: 100%;
     }
 
 }
@@ -487,6 +542,32 @@ footer div {
 
     .contMensajeCompra {
         justify-content: space-evenly;
+    }
+
+    #wrapperCompraFinal {
+        max-width: 1300px;
+        margin: auto;
+        display: grid;
+        grid-template-areas:'subtitulo'
+                            'mainFinal';
+        background-color: white;
+        grid-template-rows: 80px 1fr;
+    }
+
+    #mainFinal{
+        grid-area: mainFinal;
+    }
+
+    .subtSeccion{
+        grid-area: subtitulo;
+    }
+
+    #secResumenCompra {
+        width: 80%;
+    }
+
+    .resumenCarrito{
+        gap: 20%;
     }
 
 }
