@@ -374,6 +374,13 @@ section {
     padding-left: 5px;
 }
 
+.toastAgregar{
+    font-size: 1rem;
+    background: black;
+    width: 150px;
+    text-align: center;
+}
+
 /******* FOOTER ********/
 
 footer {
@@ -507,6 +514,11 @@ footer div {
     .cantProdResumen,
     .precioProdResumen {
         width: 80px;
+    }
+
+    .toastAgregar{
+        font-size: 1.4rem;
+        width: 200px;
     }
 
 }

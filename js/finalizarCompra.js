@@ -39,7 +39,7 @@ function mostrarResumenCompra() {
 function chequearLocalStorage() {
     if (miLocalStorage.getItem('carrito') == null) {
         wrapperCompraFinal.innerHTML = ''
-        wrapperCompraFinal.style.height = "30vh";
+        wrapperCompraFinal.style.height = "80vh";
         let contMensajeCompra = document.createElement('div');
         contMensajeCompra.setAttribute('class', 'contMensajeCompra');
         let mensajeCompra = document.createElement('p');
@@ -51,8 +51,9 @@ function chequearLocalStorage() {
 }
 
 function finalizarCompra() {
+    mostrarAnimacionCompra();
     wrapperCompraFinal.innerHTML = ''
-    wrapperCompraFinal.style.height = "30vh";
+    wrapperCompraFinal.style.height = "80vh";
     let contMensajeCompra = document.createElement('div');
     contMensajeCompra.setAttribute('class', 'contMensajeCompra');
     let mensajeCompra = document.createElement('p');
@@ -64,8 +65,18 @@ function finalizarCompra() {
     localStorage.clear();
 }
 
+function mostrarAnimacionCompra(){
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Procesando Compra',
+        showConfirmButton: false,
+        timer: 1500
+      })
+}
+
 //////////////////////////////// PROGRAMA ////////////////////////////////
 
 cargarCarritoDeLocalStorage()
-chequearLocalStorage()
 mostrarResumenCompra()
+chequearLocalStorage()

@@ -35,6 +35,17 @@ function mostrarProductos(listaProd) {
 ////////////////////////////
 
 function agregarAlCarrito(e) {
+    let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
+    let nombreProdElegido = prodElegido[0].nombre;
+    Toastify({
+        text: `PRODUCTO AGREGADO:
+              ${nombreProdElegido}`,
+        duration: 2000,
+        className: "toastAgregar",
+        offset: {
+            y: 80
+          },
+    }).showToast();
     carrito.push(e.target.getAttribute('prodID'));
     actualizarContadorCarrito()
     mostrarCarrito();
