@@ -17,7 +17,7 @@
 <body>
 
     <header id="headerFinal">
-        <div id="contHeader">
+        <div id="contHeaderFinal">
             <div id="contMarca">
                 <a href="../index.html" id="linkLogo">
                     <img src="../img/Logo.png" alt="Logo" id="logo">
@@ -32,40 +32,18 @@
             <section id="secResumenCompra">
             </section>
             <p class="TotalResumen">Precio Total: $<span id="precioFinalResumen"></span></p>
-            <form action="" id="formCompra">
+            <form action="" id="formCompra" onsubmit="return finalizarCompra()">
                 <legend id="TituloformCompra">Datos Personales</legend>
                 <label for="nombre">Nombre</label>
                 <input type="text" class="inputDatos" id="nombreCliente" value="Juan Carlos" name="nombre" required>
                 <label for="apellido">Apellido</label>
                 <input type="text" class="inputDatos" id="apellidoCliente" value="Gonzalez" name="apellido" required>
                 <label for="email">Email</label>
-                <input type="email" class="inputDatos" id="emailCliente" value="juancag@gmail.com" name="email" required>
-                <input type="submit" class ="btn btn-dark" id="confirmarCompra" value="Confirmar Compra">
+                <input type="email" class="inputDatos" id="emailCliente" value="juancag@gmail.com" name="email"
+                    required>
+                <input type="submit" class="btn btn-dark" id="confirmarCompra" value="Confirmar Compra">
             </form>
         </main>
-
-        <!-- <footer id="footerCompraFinal">
-            <div id="contSocial">
-                <div id="footContacto">
-                    <h3>Contactanos</h3>
-                    <p>5555-5555</p>
-                    <p><a href="#">info@powertech.com</a></p>
-                    <p>Calle Falsa 123</p>
-                </div>
-
-                <div id="footRedes">
-                    <h3>Redes sociales</h3>
-                    <div id="Container_Redes">
-                        <a href="#"><img src="../img/facebook.png" alt="Logo de facebook" class="logosRedes"></a>
-                        <a href="#"><img src="../img/instagram.png" alt="Logo de instagram" class="logosRedes"></a>
-                        <a href="#"><img src="../img/twitter.png" alt="Logo de twitter" class="logosRedes"></a>
-                    </div>
-                </div>
-            </div>
-            <div id="footCopy">
-                <p>Copyright &copy; Powertech Gaming 2022</p>
-            </div>
-        </footer> -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
