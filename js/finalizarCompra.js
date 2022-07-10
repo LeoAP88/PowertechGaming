@@ -6,11 +6,8 @@ const wrapperCompraFinal = document.querySelector('#wrapperCompraFinal');
 
 /////////////////////////// FUNCIONES ///////////////////////////
 
-
 function cargarCarritoDeLocalStorage() {
-    if (miLocalStorage.getItem('carrito') !== null) {
-        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
-    }
+    carrito = JSON.parse(miLocalStorage.getItem('carrito')) || []
 }
 
 function mostrarResumenCompra() {
@@ -37,17 +34,20 @@ function mostrarResumenCompra() {
 }
 
 function chequearLocalStorage() {
-    if (miLocalStorage.getItem('carrito') == null) {
-        wrapperCompraFinal.innerHTML = ''
-        wrapperCompraFinal.style.height = "80vh";
-        let contMensajeCompra = document.createElement('div');
-        contMensajeCompra.setAttribute('class', 'contMensajeCompra');
-        let mensajeCompra = document.createElement('p');
-        mensajeCompra.setAttribute('class', 'mensajeCompra');
-        mensajeCompra.innerText = "Vuelva al inicio para comprar"
-        wrapperCompraFinal.appendChild(contMensajeCompra);
-        contMensajeCompra.appendChild(mensajeCompra);
-    }
+    let contMensajeCompra;
+    let mensajeCompra;
+    miLocalStorage.getItem('carrito') == null &&
+        (
+            wrapperCompraFinal.innerHTML = '',
+            wrapperCompraFinal.style.height = "80vh",
+            contMensajeCompra = document.createElement('div'),
+            contMensajeCompra.setAttribute('class', 'contMensajeCompra'),
+            mensajeCompra = document.createElement('p'),
+            mensajeCompra.setAttribute('class', 'mensajeCompra'),
+            mensajeCompra.innerText = "Vuelva al inicio para comprar",
+            wrapperCompraFinal.appendChild(contMensajeCompra),
+            contMensajeCompra.appendChild(mensajeCompra)
+        )
 }
 
 function finalizarCompra() {
@@ -65,14 +65,14 @@ function finalizarCompra() {
     localStorage.clear();
 }
 
-function mostrarAnimacionCompra(){
+function mostrarAnimacionCompra() {
     Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Procesando Compra',
         showConfirmButton: false,
         timer: 1500
-      })
+    })
 }
 
 //////////////////////////////// PROGRAMA ////////////////////////////////

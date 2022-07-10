@@ -37,20 +37,24 @@ function mostrarProductos(listaProd) {
 function agregarAlCarrito(e) {
     let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
     let nombreProdElegido = prodElegido[0].nombre;
-    Toastify({
-        text: `PRODUCTO AGREGADO:
-              ${nombreProdElegido}`,
-        duration: 2000,
-        className: "toastAgregar",
-        offset: {
-            y: 80
-          },
-    }).showToast();
+    mostrarToast(nombreProdElegido);
     carrito.push(e.target.getAttribute('prodID'));
     actualizarContadorCarrito()
     mostrarCarrito();
     verificarEstadoCarrito();
     guardarCarritoEnLocalStorage();
+}
+
+function mostrarToast(prod) {
+    Toastify({
+        text: `PRODUCTO AGREGADO:
+                ${prod}`,
+        duration: 1000,
+        className: "toastAgregar",
+        offset: {
+            y: 80
+        },
+    }).showToast();
 }
 
 function mostrarCarrito() {
@@ -98,17 +102,17 @@ function actualizarContadorCarrito() {
 }
 
 function verificarEstadoCarrito() {
-    if (carrito.length == 0) {
-        pPrecioTotal.setAttribute('style', 'display:none');
-        btnFinalizar.setAttribute('style', 'display:none');
-        btnVaciarCarrito.setAttribute('style', 'display:none');
-        contItemsCarrito.appendChild(mensajeCarritoVacio);
-    }
-    else {
-        pPrecioTotal.removeAttribute('style', 'display:none');
-        btnFinalizar.removeAttribute('style', 'display:none');
-        btnVaciarCarrito.removeAttribute('style', 'display:none');
-    }
+    carrito.length == 0 ? 
+    (
+        pPrecioTotal.setAttribute('style', 'display:none'),
+        btnFinalizar.setAttribute('style', 'display:none'),
+        btnVaciarCarrito.setAttribute('style', 'display:none'),
+        contItemsCarrito.appendChild(mensajeCarritoVacio)
+    ) : (
+        pPrecioTotal.removeAttribute('style', 'display:none'),
+        btnFinalizar.removeAttribute('style', 'display:none'),
+        btnVaciarCarrito.removeAttribute('style', 'display:none')
+        )
 }
 
 function vaciarCarrito() {
@@ -156,12 +160,13 @@ btnFinalizar.onclick = () => {
 //////////////////////////////////////
 
 barraBuscar.addEventListener('input', () => {
-    if (barraBuscar.value === '') {
-        mostrarProductos(productos);
-    } else {
-        let prodFiltrados = productos.filter(elemento => elemento.nombre.includes(barraBuscar.value.toUpperCase()));
-        mostrarProductos(prodFiltrados);
-    }
+    let prodFiltrados;
+    barraBuscar.value === '' ?
+        mostrarProductos(productos) :
+        (
+            prodFiltrados = productos.filter(elemento => elemento.nombre.includes(barraBuscar.value.toUpperCase())),
+            mostrarProductos(prodFiltrados)
+        )
 })
 
 ////////////////////////////
@@ -174,9 +179,7 @@ function obtenerValoresCheckbox() {
     let valoresCheckbox = new Array();
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     checkboxes.forEach((elem) => {
-        if (elem.checked) {
-            valoresCheckbox.push(elem.value);
-        }
+        elem.checked && valoresCheckbox.push(elem.value);
     });
     return valoresCheckbox;
 }
@@ -190,9 +193,7 @@ btnFiltro.onclick = (e) => {
         prodCheckeados = new Array();
         for (let i = 0; i < seleccionados.length; i++) {
             for (let p = 0; p < productos.length; p++) {
-                if (seleccionados[i] == productos[p].categoria) {
-                    prodCheckeados.push(productos[p]);
-                }
+                seleccionados[i] == productos[p].categoria && prodCheckeados.push(productos[p])
             }
         }
         mostrarProductos(prodCheckeados);
@@ -209,11 +210,7 @@ window.onscroll = function () { detectarScrollVertical() };
 botonToTop.onclick = function () { irArriba() };
 
 function detectarScrollVertical() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        botonToTop.style.display = "block";
-    } else {
-        botonToTop.style.display = "none";
-    }
+    (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? botonToTop.style.display = "block" : botonToTop.style.display = "none";
 }
 
 function irArriba() {
