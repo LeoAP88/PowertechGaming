@@ -5,6 +5,7 @@
 /////////////////////////////////////
 
 function mostrarProductos(listaProd) {
+    // Creo los contenedores con la información de cada producto
     mainSec.innerHTML = ""
     listaProd.forEach(prod => {
         let contenedor = document.createElement("article");
@@ -21,6 +22,7 @@ function mostrarProductos(listaProd) {
         contInfoCompra.classList.add('contInfoCompra');
         mainSec.appendChild(contenedor);
         contenedor.appendChild(contInfoCompra);
+        // Creo un botón de comprar asignandole un tag imaginario, que contiene el id del producto seleccionado
         const btnComprar = document.createElement('button');
         btnComprar.classList.add('btn-comprar');
         btnComprar.textContent = ('Comprar');
@@ -35,6 +37,7 @@ function mostrarProductos(listaProd) {
 ////////////////////////////
 
 function agregarAlCarrito(e) {
+    // Para agregar un producto al carrito, lo filtro por el valor del tag imaginario prodID, que le asigné a cada botón de Comprar
     let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
     let nombreProdElegido = prodElegido[0].nombre;
     mostrarToast(nombreProdElegido);
@@ -46,6 +49,7 @@ function agregarAlCarrito(e) {
 }
 
 function mostrarToast(prod) {
+    // Muestra una notificacion en forma de toast con el nombre del producto agregado al carrito
     Toastify({
         text: `PRODUCTO AGREGADO:
                 ${prod}`,
@@ -59,6 +63,7 @@ function mostrarToast(prod) {
 
 function mostrarCarrito() {
     contItemsCarrito.textContent = '';
+    // Realizo una copia del array carrito y filtro duplicados, sumando cantidades a igual producto seleccionado
     const carritoSinDuplicados = [...new Set(carrito)];
     carritoSinDuplicados.forEach((item) => {
         const miItem = productos.filter((prod) => {
@@ -88,6 +93,7 @@ function mostrarCarrito() {
 }
 
 function borrarItemCarrito(e) {
+    // Filtro todos los productos que sean diferentes al id del producto seleccionado para borrar
     const id = e.target.dataset.item;
     carrito = carrito.filter((carritoId) => {
         return carritoId !== id;
@@ -98,10 +104,12 @@ function borrarItemCarrito(e) {
 }
 
 function actualizarContadorCarrito() {
+    // Muestra un contador de los items del carrito a la derecha de la imagen del carrito
     contadorCarrito.textContent = carrito.length;
 }
 
 function verificarEstadoCarrito() {
+    // Verifica el estado del carrito al cargar el sitio o borrar un item del carrito, y oculta el total del carrito, boton de vaciar y comprar, en caso de que el carrito esté vacío.
     carrito.length == 0 ? 
     (
         pPrecioTotal.setAttribute('style', 'display:none'),
@@ -160,6 +168,7 @@ btnFinalizar.onclick = () => {
 //////////////////////////////////////
 
 barraBuscar.addEventListener('input', () => {
+    // Busca y muestra los productos a medida que se escribe en la barra de busqueda
     let prodFiltrados;
     barraBuscar.value === '' ?
         mostrarProductos(productos) :
@@ -172,6 +181,8 @@ barraBuscar.addEventListener('input', () => {
 ////////////////////////////
 /// Filtros por checkbox ///
 ////////////////////////////
+
+// Busca y muestra los productos tildados en los checkbox al darle clic en el boton Aplicar
 
 let btnFiltro = document.getElementById("btn-filtrar");
 

@@ -1,3 +1,5 @@
+/////////////////////////// DOM ///////////////////////////
+
 const confirmarCompra = document.querySelector('#confirmarCompra');
 const nombreCliente = document.querySelector('#nombreCliente');
 const apellidoCliente = document.querySelector('#apellidoCliente');
@@ -11,6 +13,7 @@ function cargarCarritoDeLocalStorage() {
 }
 
 function mostrarResumenCompra() {
+    // Muestra un resumen del carrito seleccionado en el paso anterior
     const carritoSinDuplicados = [...new Set(carrito)];
     carritoSinDuplicados.forEach((item) => {
         const itemFinal = productos.filter((prod) => {
@@ -34,6 +37,7 @@ function mostrarResumenCompra() {
 }
 
 function chequearLocalStorage() {
+    // Para prevenir que se muestre el resumen de compra vacío al refrescar la página luego de una compra
     let contMensajeCompra;
     let mensajeCompra;
     miLocalStorage.getItem('carrito') == null &&
@@ -51,6 +55,7 @@ function chequearLocalStorage() {
 }
 
 function finalizarCompra() {
+    // Muestra una animacion por el procesamiento de la compra y despliega un mensaje de la compra finalizada
     mostrarAnimacionCompra();
     wrapperCompraFinal.innerHTML = ''
     wrapperCompraFinal.style.height = "80vh";

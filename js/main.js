@@ -62,6 +62,9 @@ productos.push(new Producto(7001, "Memoria RAM DDR4 ADATA 16gb 3200mhz", "RAM", 
 productos.push(new Producto(7002, "Memoria RAM DDR4 ADATA 16gb 3600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR4_ADATA16GB3600.jpg"));
 productos.push(new Producto(7003, "Memoria RAM DDR5 Team 32gb 5600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR5_Team32GB.jpg"));
 
+
+/////////////////////////// FUNCIONES GLOBALES ///////////////////////////
+
 function calcularTotal() {
     return carrito.reduce((total, item) => {
         const miItem = productos.filter((items) => {
