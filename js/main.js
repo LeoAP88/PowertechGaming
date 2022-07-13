@@ -1,75 +1,237 @@
-/////////////////////////// GLOBAL ///////////////////////////
+/////////////////////////// FUNCIONES ///////////////////////////
 
-let carrito = []
-const mainSec = document.querySelector(".SecMain");
-const barraBuscar = document.getElementById("barraBusqueda");
-const contadorCarrito = document.querySelector('#contadorCarrito');
-const contItemsCarrito = document.querySelector("#contItemsCarrito");
-const precioTotal = document.querySelector('#precioTotal');
-const pPrecioTotal = document.querySelector('.Total');
-const carritoBody = document.querySelector('.offcanvas-body');
-const btnVaciarCarrito = document.querySelector('#btnVaciar');
-const mensajeCarritoVacio = document.createElement('p');
-mensajeCarritoVacio.textContent = 'Tu carrito está vacío';
-mensajeCarritoVacio.classList.add('mensajeCarritoVacio');
-const miLocalStorage = window.localStorage;
-const imagenCarrito = document.querySelector('#contenedorCarrito');
-const wrapper = document.querySelector('#wrapper');
+/////////////////////////////////////
+//// Mostrar todos los productos ////
+/////////////////////////////////////
 
+function mostrarProductos(listaProd) {
+    // Creo los contenedores con la información de cada producto
+    mainSec.innerHTML = ""
+    listaProd.forEach(prod => {
+        let contenedor = document.createElement("article");
+        contenedor.classList.add('contProducto');
+        contenedor.innerHTML = `
+                            <img src=${prod.imagen} alt=${prod.nombre} class="imgProd">
+                            <div class="contInfoProd">
+                            <p class="nombreProd">${prod.nombre}</p>
+                            <p class="precioProd">$${prod.precio}</p>
+                            </div>
+                            `;
 
-/////////////////////////// CLASES ///////////////////////////
+        const contInfoCompra = document.createElement('div');
+        contInfoCompra.classList.add('contInfoCompra');
+        mainSec.appendChild(contenedor);
+        contenedor.appendChild(contInfoCompra);
+        // Creo un botón de comprar asignandole un tag imaginario, que contiene el id del producto seleccionado
+        const btnComprar = document.createElement('button');
+        btnComprar.classList.add('btn-comprar');
+        btnComprar.textContent = ('Comprar');
+        btnComprar.setAttribute('prodID', prod.idprod);
+        contInfoCompra.appendChild(btnComprar);
+        btnComprar.addEventListener('click', agregarAlCarrito);
+    });
+}
 
-class Producto {
-    constructor(idprod, nombre, categoria, precio, imagen) {
-        this.idprod = idprod;
-        this.nombre = nombre.toUpperCase();
-        this.categoria = categoria;
-        this.precio = parseFloat(precio);
-        this.imagen = imagen;
+////////////////////////////
+//// Carrito de compras ////
+////////////////////////////
+
+function agregarAlCarrito(e) {
+    // Para agregar un producto al carrito, lo filtro por el valor del tag imaginario prodID, que le asigné a cada botón de Comprar
+    let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
+    let nombreProdElegido = prodElegido[0].nombre;
+    mostrarToast(nombreProdElegido);
+    carrito.push(e.target.getAttribute('prodID'));
+    actualizarContadorCarrito()
+    mostrarCarrito();
+    verificarEstadoCarrito();
+    guardarCarritoEnLocalStorage();
+}
+
+function mostrarToast(prod) {
+    // Muestra una notificacion en forma de toast con el nombre del producto agregado al carrito
+    Toastify({
+        text: `PRODUCTO AGREGADO:
+                ${prod}`,
+        duration: 1000,
+        className: "toastAgregar",
+        offset: {
+            y: 80
+        },
+    }).showToast();
+}
+
+function mostrarCarrito() {
+    contItemsCarrito.textContent = '';
+    // Realizo una copia del array carrito y filtro duplicados, sumando cantidades a igual producto seleccionado
+    const carritoSinDuplicados = [...new Set(carrito)];
+    carritoSinDuplicados.forEach((item) => {
+        const miItem = productos.filter((prod) => {
+            return prod.idprod === parseInt(item);
+        });
+        const unidadesProd = carrito.reduce((total, itemId) => {
+            return itemId === item ? total += 1 : total;
+        }, 0);
+        let div = document.createElement('div')
+        div.setAttribute('class', 'productoEnCarrito')
+        div.innerHTML = `
+                        <img src=${miItem[0].imagen} alt=${miItem[0].nombre} class="imgProdCarrito">
+                        <p>${miItem[0].nombre}</p>
+                        <p>Cantidad: ${unidadesProd}</p>
+                        <p>Precio: $${miItem[0].precio}</p>
+                        `
+        const btnEliminar = document.createElement('button');
+        btnEliminar.classList.add('boton-eliminar', 'btn-danger');
+        btnEliminar.textContent = 'X';
+        btnEliminar.dataset.item = item;
+        btnEliminar.addEventListener('click', borrarItemCarrito);
+        div.appendChild(btnEliminar);
+        contItemsCarrito.appendChild(div);
+    })
+    actualizarContadorCarrito()
+    precioTotal.textContent = calcularTotal()
+}
+
+function borrarItemCarrito(e) {
+    // Filtro todos los productos que sean diferentes al id del producto seleccionado para borrar
+    const id = e.target.dataset.item;
+    carrito = carrito.filter((carritoId) => {
+        return carritoId !== id;
+    });
+    mostrarCarrito();
+    verificarEstadoCarrito();
+    guardarCarritoEnLocalStorage();
+}
+
+function actualizarContadorCarrito() {
+    // Muestra un contador de los items del carrito a la derecha de la imagen del carrito
+    contadorCarrito.textContent = carrito.length;
+}
+
+function verificarEstadoCarrito() {
+    // Verifica el estado del carrito al cargar el sitio o borrar un item del carrito, y oculta el total del carrito, boton de vaciar y comprar, en caso de que el carrito esté vacío.
+    carrito.length == 0 ? 
+    (
+        pPrecioTotal.setAttribute('style', 'display:none'),
+        btnFinalizar.setAttribute('style', 'display:none'),
+        btnVaciarCarrito.setAttribute('style', 'display:none'),
+        contItemsCarrito.appendChild(mensajeCarritoVacio)
+    ) : (
+        pPrecioTotal.removeAttribute('style', 'display:none'),
+        btnFinalizar.removeAttribute('style', 'display:none'),
+        btnVaciarCarrito.removeAttribute('style', 'display:none')
+        )
+}
+
+function vaciarCarrito() {
+    carrito = [];
+    mostrarCarrito();
+    verificarEstadoCarrito();
+    localStorage.clear();
+}
+
+btnVaciarCarrito.addEventListener('click', vaciarCarrito);
+
+///////////////////////
+//// Local Storage ////
+///////////////////////
+
+function guardarCarritoEnLocalStorage() {
+    miLocalStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function cargarCarritoDeLocalStorage() {
+    if (miLocalStorage.getItem('carrito') !== null) {
+        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
+        mostrarCarrito()
     }
 }
 
-/////////////////////////// OBJETOS ///////////////////////////
+//////////////////////////
+//// Finalizar compra ////
+//////////////////////////
 
-const productos = [];
-productos.push(new Producto(1000, "Procesador Intel Core i3 12100", "CPU_Intel", 25000, "./img/Productos/Procesadores/i3.jpg"));
-productos.push(new Producto(1001, "Procesador Intel Core i5 12400", "CPU_Intel", 38000, "./img/Productos/Procesadores/i5.jpg"));
-productos.push(new Producto(1002, "Procesador Intel Core i7 12700K", "CPU_Intel", 70000, "./img/Productos/Procesadores/i7.jpg"));
-productos.push(new Producto(1003, "Procesador Intel Core i9 12900k", "CPU_Intel", 100000, "./img/Productos/Procesadores/i9.jpg"));
-productos.push(new Producto(2000, "Procesador AMD Ryzen 5 5600", "CPU_AMD", 32000, "./img/Productos/Procesadores/Ryzen5600.jpg"));
-productos.push(new Producto(2001, "Procesador AMD Ryzen 7 5800x", "CPU_AMD", 55000, "./img/Productos/Procesadores/Ryzen5800x.jpg"));
-productos.push(new Producto(2002, "Procesador AMD Ryzen 7 5800x3D", "CPU_AMD", 68000, "./img/Productos/Procesadores/Ryzen5800x3d.jpg"));
-productos.push(new Producto(2003, "Procesador AMD Ryzen 9 5900x", "CPU_AMD", 90000, "./img/Productos/Procesadores/Ryzen5900x.jpg"));
-productos.push(new Producto(2004, "Procesador AMD Ryzen 9 5950x", "CPU_AMD", 90000, "./img/Productos/Procesadores/Ryzen5950x.jpg"));
-productos.push(new Producto(3000, "Placa de video Nvidia MSI RTX 3070TI", "GPU_Nvidia", 150000, "./img/Productos/Placas/GPU_Nvidia_MSI_RTX3070TI.jpg"));
-productos.push(new Producto(3001, "Placa de video Nvidia ZOTAC RTX 3070TI", "GPU_Nvidia", 150000, "./img/Productos/Placas/GPU_Nvidia_ZOTAC_RTX3070TI.jpg"));
-productos.push(new Producto(3002, "Placa de video Nvidia ASUS RTX 3080TI", "GPU_Nvidia", 250000, "./img/Productos/Placas/GPU_Nvidia_MSI_RTX3080ti.jpg"));
-productos.push(new Producto(3003, "Placa de video Nvidia MSI RTX 3080TI", "GPU_Nvidia", 250000, "./img/Productos/Placas/GPU_Nvidia_ASUS_RTX3080TI.jpg"));
-productos.push(new Producto(3004, "Placa de video Nvidia ASUS RTX 3090", "GPU_Nvidia", 400000, "./img/Productos/Placas/GPU_Nvidia_ASUS_RTX3090.jpg"));
-productos.push(new Producto(3005, "Placa de video Nvidia MSI RTX 3090", "GPU_Nvidia", 400000, "./img/Productos/Placas/GPU_Nvidia_MSI_RTX3090.jpg"));
-productos.push(new Producto(4000, "Placa de video AMD Asrock RX6700XT", "GPU_AMD", 150000, "./img/Productos/Placas/GPU_AMD_Asrock_RX6700XT.jpg"));
-productos.push(new Producto(4001, "Placa de video AMD ASUS RX6800XT", "GPU_AMD", 200000, "./img/Productos/Placas/GPU_AMD_ASUS_RX6800XT.jpg"));
-productos.push(new Producto(4002, "Placa de video AMD Powercolor RX6900XT", "GPU_AMD", 400000, "./img/Productos/Placas/GPU_AMD_Powecolor_RX6900XT.jpg"));
-productos.push(new Producto(4003, "Placa de video AMD XFX RX6900XT", "GPU_AMD", 400000, "./img/Productos/Placas/GPU_AMD_XFX_RX6900XT.jpg"));
-productos.push(new Producto(5000, "Motherboard Intel Gigabyte Aorus Z690", "Mother_Intel", 100000, "./img/Productos/Motherboard/Mother_Intel_GigaZ690Aorus.jpg"));
-productos.push(new Producto(5001, "Motherboard Intel MSI Unify Z690", "Mother_Intel", 110000, "./img/Productos/Motherboard/Mother_Intel_MSIZ690Unify.jpg"));
-productos.push(new Producto(5002, "Motherboard Intel ASUS ROG Z690", "Mother_Intel", 130000, "./img/Productos/Motherboard/Mother_Intel_RogMaxZ690.jpg"));
-productos.push(new Producto(6000, "Motherboard AMD MSI X570", "Mother_AMD", 100000, "./img/Productos/Motherboard/Mother_AMD_MSIX570SEdge.jpg"));
-productos.push(new Producto(6001, "Motherboard AMD Gigabyte Aorus X570", "Mother_AMD", 110000, "./img/Productos/Motherboard/Mother_AMD_GigaX570SAorus.jpg"));
-productos.push(new Producto(6002, "Motherboard AMD ASUS Crosshair X570", "Mother_AMD", 130000, "./img/Productos/Motherboard/Mother_AMD_AsusX570CrosshairVIII.jpg"));
-productos.push(new Producto(7000, "Memoria RAM DDR4 Team 4gb 2400mhz", "RAM", 5000, "./img/Productos/RAM/RAMDDR4_Team4GB.jpg"));
-productos.push(new Producto(7001, "Memoria RAM DDR4 ADATA 16gb 3200mhz", "RAM", 12000, "./img/Productos/RAM/RAMDDR4_ADATA16GB3200.jpg"));
-productos.push(new Producto(7002, "Memoria RAM DDR4 ADATA 16gb 3600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR4_ADATA16GB3600.jpg"));
-productos.push(new Producto(7003, "Memoria RAM DDR5 Team 32gb 5600mhz", "RAM", 13500, "./img/Productos/RAM/RAMDDR5_Team32GB.jpg"));
+const main = document.querySelector('#main');
+const btnFinalizar = document.querySelector('#btn-finalizar');
+const productosComprados = document.querySelector('#itemsCarrito');
+const aside = document.querySelector('#aside');
+const subtitulo = document.querySelector('.subtSeccion');
+const secResumenCompra = document.querySelector('#secResumenCompra');
+const contenedorCompraFinalizada = document.querySelector('#contenedorCompraFinalizada');
 
-
-/////////////////////////// FUNCIONES GLOBALES ///////////////////////////
-
-function calcularTotal() {
-    return carrito.reduce((total, item) => {
-        const miItem = productos.filter((items) => {
-            return items.idprod === parseInt(item);
-        });
-        return total + miItem[0].precio;
-    }, 0);
+btnFinalizar.onclick = () => {
+    location.href = './pages/finalizarCompra.html';
 }
+
+//////////////////////////////////////
+/// Barra de busqueda de productos ///
+//////////////////////////////////////
+
+barraBuscar.addEventListener('input', () => {
+    // Busca y muestra los productos a medida que se escribe en la barra de busqueda
+    let prodFiltrados;
+    barraBuscar.value === '' ?
+        mostrarProductos(productos) :
+        (
+            prodFiltrados = productos.filter(elemento => elemento.nombre.includes(barraBuscar.value.toUpperCase())),
+            mostrarProductos(prodFiltrados)
+        )
+})
+
+////////////////////////////
+/// Filtros por checkbox ///
+////////////////////////////
+
+// Busca y muestra los productos tildados en los checkbox al darle clic en el boton Aplicar
+
+let btnFiltro = document.getElementById("btn-filtrar");
+
+function obtenerValoresCheckbox() {
+    let valoresCheckbox = new Array();
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((elem) => {
+        elem.checked && valoresCheckbox.push(elem.value);
+    });
+    return valoresCheckbox;
+}
+
+btnFiltro.onclick = (e) => {
+    e.preventDefault();
+    let seleccionados = obtenerValoresCheckbox();
+    if (seleccionados.length == 0) {
+        mostrarProductos(productos);
+    } else {
+        prodCheckeados = new Array();
+        for (let i = 0; i < seleccionados.length; i++) {
+            for (let p = 0; p < productos.length; p++) {
+                seleccionados[i] == productos[p].categoria && prodCheckeados.push(productos[p])
+            }
+        }
+        mostrarProductos(prodCheckeados);
+    }
+};
+
+////////////////////////////////////////////////////
+//// Ir al inicio cuando hay scrolling vertical ////
+////////////////////////////////////////////////////
+
+botonToTop = document.getElementById("toTop");
+
+window.onscroll = function () { detectarScrollVertical() };
+botonToTop.onclick = function () { irArriba() };
+
+function detectarScrollVertical() {
+    (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? botonToTop.style.display = "block" : botonToTop.style.display = "none";
+}
+
+function irArriba() {
+    document.body.scrollTop = 0; // Safari
+    document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
+}
+
+//////////////////////////////// PROGRAMA ////////////////////////////////
+
+actualizarContadorCarrito();
+cargarCarritoDeLocalStorage();
+mostrarProductos(productos);
+verificarEstadoCarrito();
