@@ -31,27 +31,46 @@ class Producto {
 
 /////////////////////////// OBJETOS ///////////////////////////
 
-const productos = [];
+let productos = [];
 
-function traerProductos() {
+// function traerProductos() {
 
-    fetch('./listaProductos.json').then(response => {
-        return response.json();
-    }).then(listaProductos => {
+//     fetch('./listaProductos.json').then(response => {
+//         return response.json();
+//     }).then(listaProductos => {
 
-        listaProductos.forEach((prod) => {
-            productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen));
-        })
+//         listaProductos.forEach((prod) => {
+//             productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen));
+//         })
 
-        mostrarProductos(productos);
+//         mostrarProductos(productos);
 
-    }).catch(err => {
-        console.log('error');
-    });
+//     }).catch(err => {
+//         console.log('error');
+//     });
 
+// }
+
+// traerProductos();
+
+const url = './listaProductos.json';
+
+const obtenerDatos = async () => {
+
+    const respuesta = await fetch(url);
+    // console.log(respuesta);
+    const datos = await respuesta.json();
+    datos.forEach((prod) => {
+        productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen));
+    })
+    console.log(productos);
+    mostrarProductos(datos);
 }
 
-traerProductos();
+obtenerDatos();
+
+
+
 
 // productos.push(new Producto(1000, "Procesador Intel Core i3 12100", "CPU_Intel", 25000, "./img/Productos/Procesadores/i3.jpg"));
 // productos.push(new Producto(1001, "Procesador Intel Core i5 12400", "CPU_Intel", 38000, "./img/Productos/Procesadores/i5.jpg"));
