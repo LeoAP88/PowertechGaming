@@ -15,7 +15,7 @@ function cargarCarritoDeLocalStorage() {
 function mostrarResumenCompra() {
     // Muestra un resumen del carrito seleccionado en el paso anterior
     const carritoSinDuplicados = [...new Set(carrito)];
-    carritoSinDuplicados.forEach((item) => {
+    carritoSinDuplicados.forEach((item) => {    
         const itemFinal = productos.filter((prod) => {
             return prod.idprod === parseInt(item);
         });
