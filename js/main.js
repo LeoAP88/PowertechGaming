@@ -4,10 +4,10 @@
 //// Mostrar todos los productos ////
 /////////////////////////////////////
 
-function mostrarProductos(listaProd) {
+function mostrarProductos(prd) {
     // Creo los contenedores con la información de cada producto
     mainSec.innerHTML = ""
-    listaProd.forEach(prod => {
+    prd.forEach(prod => {
         let contenedor = document.createElement("article");
         contenedor.classList.add('contProducto');
         contenedor.innerHTML = `
@@ -36,7 +36,8 @@ function mostrarProductos(listaProd) {
 //// Carrito de compras ////
 ////////////////////////////
 
-function agregarAlCarrito(e) {
+async function agregarAlCarrito(e) {
+    let productos = await traerProductos();
     // Para agregar un producto al carrito, lo filtro por el valor del tag imaginario prodID, que le asigné a cada botón de Comprar
     let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
     let nombreProdElegido = prodElegido[0].nombre;
@@ -61,7 +62,8 @@ function mostrarToast(prod) {
     }).showToast();
 }
 
-function mostrarCarrito() {
+async function mostrarCarrito() {
+    let productos = await traerProductos();
     contItemsCarrito.textContent = '';
     // Realizo una copia del array carrito y filtro duplicados, sumando cantidades a igual producto seleccionado
     const carritoSinDuplicados = [...new Set(carrito)];
@@ -167,8 +169,9 @@ btnFinalizar.onclick = () => {
 /// Barra de busqueda de productos ///
 //////////////////////////////////////
 
-barraBuscar.addEventListener('input', () => {
+barraBuscar.addEventListener('input', async() => {
     // Busca y muestra los productos a medida que se escribe en la barra de busqueda
+    let productos = await traerProductos();
     let prodFiltrados;
     barraBuscar.value === '' ?
         mostrarProductos(productos) :
@@ -195,8 +198,9 @@ function obtenerValoresCheckbox() {
     return valoresCheckbox;
 }
 
-btnFiltro.onclick = (e) => {
+btnFiltro.onclick = async(e) => {
     e.preventDefault();
+    let productos = await traerProductos();
     let seleccionados = obtenerValoresCheckbox();
     if (seleccionados.length == 0) {
         mostrarProductos(productos);
@@ -231,7 +235,7 @@ function irArriba() {
 
 //////////////////////////////// PROGRAMA ////////////////////////////////
 
+traerYmostrarProductos()
 actualizarContadorCarrito();
 cargarCarritoDeLocalStorage();
-mostrarProductos(productos);
 verificarEstadoCarrito();

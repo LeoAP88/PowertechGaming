@@ -31,23 +31,64 @@ class Producto {
 
 /////////////////////////// OBJETOS ///////////////////////////
 
-const productos = []
 
-const url = '../json/listaProd.json';
 
-function obtenerDatos(){
-    fetch(url)
-    .then(response => response.json())
-    .then(listaProd => {
-        listaProd.forEach(prod =>{
-            productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen))
-        });
-        mostrarProductos(productos);
-    })
-    .catch(err=> console.log(err))
+// const url = '../json/listaProd.json';
+
+// function obtenerDatos(){
+//     fetch(url)
+//     .then(response => response.json())
+//     .then(listaProd => {
+//         listaProd.forEach(prod =>{
+//             productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen))
+//         });
+//         mostrarProductos(productos);
+//     })
+//     .catch(err=> console.log(err))
+// }
+
+// obtenerDatos()
+
+// const traerProductos = async() => {
+
+//     try {
+//         const res = await fetch('../json/listaProd.json');
+//         const productos = await res.json();
+//         productos.forEach(prod =>{
+//             productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen))
+//         });
+//         return productos;
+//     }
+//     catch(err){
+//         console.log(err)
+//     }
+// }
+
+// const productos = []
+
+
+
+
+async function obtenerDatos(url) {
+    return fetch(url).then(response => response.json());
 }
 
-obtenerDatos()
+async function traerProductos() {
+    const Lista = await obtenerDatos('../json/listaProd.json');
+    let productos = []
+    Lista.forEach(prod => {
+        productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen))
+    });
+    //mostrarProductos(productos);
+    return productos;
+}
+
+async function traerYmostrarProductos(){
+    let productos = await traerProductos()
+    mostrarProductos(productos)
+}
+
+//traerProductos()
 
 
 // productos.push(new Producto(1000, "Procesador Intel Core i3 12100", "CPU_Intel", 25000, "./img/Productos/Procesadores/i3.jpg"));
@@ -83,7 +124,19 @@ obtenerDatos()
 
 /////////////////////////// FUNCIONES GLOBALES ///////////////////////////
 
-function calcularTotal() {
+
+// async function calcularTotal() {
+//     let productos = await traerProductos();
+//     return carrito.reduce((total, item) => {
+//         const miItem = productos.filter((items) => {
+//             return items.idprod === parseInt(item);
+//         });
+//         return total + miItem[0].precio;
+//     }, 0);
+// }
+
+async function calcularTotal() {
+    let productos = await traerProductos();
     return carrito.reduce((total, item) => {
         const miItem = productos.filter((items) => {
             return items.idprod === parseInt(item);

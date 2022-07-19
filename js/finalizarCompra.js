@@ -12,7 +12,8 @@ function cargarCarritoDeLocalStorage() {
     carrito = JSON.parse(miLocalStorage.getItem('carrito')) || []
 }
 
-function mostrarResumenCompra() {
+async function mostrarResumenCompra() {
+    let productos = await traerProductos();
     // Muestra un resumen del carrito seleccionado en el paso anterior
     const carritoSinDuplicados = [...new Set(carrito)];
     carritoSinDuplicados.forEach((item) => {
@@ -82,6 +83,7 @@ function mostrarAnimacionCompra() {
 
 //////////////////////////////// PROGRAMA ////////////////////////////////
 
+traerProductos()
 cargarCarritoDeLocalStorage()
 mostrarResumenCompra()
 chequearLocalStorage()
