@@ -33,7 +33,16 @@ async function mostrarResumenCompra() {
                         `
         secResumenCompra.append(div);
     });
-    precioFinalResumen.textContent = calcularTotal();
+
+    const Total =
+        carrito.reduce((total, item) => {
+            const miItem = productos.filter((items) => {
+                return items.idprod === parseInt(item);
+            });
+            return total + miItem[0].precio;
+        }, 0);
+
+    precioFinalResumen.textContent = Total;
 
 }
 

@@ -91,7 +91,16 @@ async function mostrarCarrito() {
         contItemsCarrito.appendChild(div);
     })
     actualizarContadorCarrito()
-    precioTotal.textContent = calcularTotal()
+
+    const Total =
+        carrito.reduce((total, item) => {
+            const miItem = productos.filter((items) => {
+                return items.idprod === parseInt(item);
+            });
+            return total + miItem[0].precio;
+        }, 0);
+
+    precioTotal.textContent = Total
 }
 
 function borrarItemCarrito(e) {
@@ -112,16 +121,16 @@ function actualizarContadorCarrito() {
 
 function verificarEstadoCarrito() {
     // Verifica el estado del carrito al cargar el sitio o borrar un item del carrito, y oculta el total del carrito, boton de vaciar y comprar, en caso de que el carrito esté vacío.
-    carrito.length == 0 ? 
-    (
-        pPrecioTotal.setAttribute('style', 'display:none'),
-        btnFinalizar.setAttribute('style', 'display:none'),
-        btnVaciarCarrito.setAttribute('style', 'display:none'),
-        contItemsCarrito.appendChild(mensajeCarritoVacio)
-    ) : (
-        pPrecioTotal.removeAttribute('style', 'display:none'),
-        btnFinalizar.removeAttribute('style', 'display:none'),
-        btnVaciarCarrito.removeAttribute('style', 'display:none')
+    carrito.length == 0 ?
+        (
+            pPrecioTotal.setAttribute('style', 'display:none'),
+            btnFinalizar.setAttribute('style', 'display:none'),
+            btnVaciarCarrito.setAttribute('style', 'display:none'),
+            contItemsCarrito.appendChild(mensajeCarritoVacio)
+        ) : (
+            pPrecioTotal.removeAttribute('style', 'display:none'),
+            btnFinalizar.removeAttribute('style', 'display:none'),
+            btnVaciarCarrito.removeAttribute('style', 'display:none')
         )
 }
 
@@ -169,7 +178,7 @@ btnFinalizar.onclick = () => {
 /// Barra de busqueda de productos ///
 //////////////////////////////////////
 
-barraBuscar.addEventListener('input', async() => {
+barraBuscar.addEventListener('input', async () => {
     // Busca y muestra los productos a medida que se escribe en la barra de busqueda
     let productos = await traerProductos();
     let prodFiltrados;
@@ -198,7 +207,7 @@ function obtenerValoresCheckbox() {
     return valoresCheckbox;
 }
 
-btnFiltro.onclick = async(e) => {
+btnFiltro.onclick = async (e) => {
     e.preventDefault();
     let productos = await traerProductos();
     let seleccionados = obtenerValoresCheckbox();
