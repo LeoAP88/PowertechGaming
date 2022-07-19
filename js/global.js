@@ -37,7 +37,7 @@ async function obtenerDatos(url) {
 }
 
 async function traerProductos() {
-    const Lista = await obtenerDatos('./json/listaProd.json');
+    const Lista = await obtenerDatos('../json/listaProd.json');
     let productos = []
     Lista.forEach(prod => {
         productos.push(new Producto(prod.idprod, prod.nombre, prod.categoria, prod.precio, prod.imagen))
