@@ -171,7 +171,7 @@ const secResumenCompra = document.querySelector('#secResumenCompra');
 const contenedorCompraFinalizada = document.querySelector('#contenedorCompraFinalizada');
 
 btnFinalizar.onclick = () => {
-    location.href = './pages/finalizarCompra.html';
+    location.href = './finalizarCompra.html';
 }
 
 //////////////////////////////////////
