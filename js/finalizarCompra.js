@@ -26,7 +26,7 @@ async function mostrarResumenCompra() {
         let div = document.createElement('div')
         div.setAttribute('class', 'resumenCarrito')
         div.innerHTML = `
-                        <img src='.${itemFinal[0].imagen}' alt=${itemFinal[0].nombre} class="imgProdResumen">
+                        <img src='${itemFinal[0].imagen}' alt=${itemFinal[0].nombre} class="imgProdResumen">
                         <p class="nombreProdResumen">${itemFinal[0].nombre}</p>
                         <p class="cantProdResumen">Cantidad ${unidadesProd}</p>
                         <p class="precioProdResumen">P.U. $${itemFinal[0].precio}</p>
