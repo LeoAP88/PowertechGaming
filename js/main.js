@@ -151,11 +151,6 @@ function vaciarCarrito() {
 
 btnVaciarCarrito.addEventListener('click', vaciarCarrito);
 
-async function traerYmostrarProductos() {
-    let productos = await traerProductos()
-    mostrarProductos(productos)
-}
-
 ///////////////////////
 //// Local Storage ////
 ///////////////////////

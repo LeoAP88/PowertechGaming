@@ -38,3 +38,8 @@ async function traerProductos() {
     });
     return productos;
 }
+
+async function traerYmostrarProductos() {
+    let productos = await traerProductos()
+    mostrarProductos(productos)
+}
