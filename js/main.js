@@ -1,3 +1,11 @@
+const btnVaciarCarrito = document.querySelector('#btnVaciar');
+const mensajeCarritoVacio = document.createElement('p');
+mensajeCarritoVacio.textContent = 'Tu carrito está vacío';
+mensajeCarritoVacio.classList.add('mensajeCarritoVacio');
+const precioTotal = document.querySelector('#precioTotal');
+const pPrecioTotal = document.querySelector('.Total');
+const barraBuscar = document.getElementById("barraBusqueda");
+
 /////////////////////////// FUNCIONES ///////////////////////////
 
 /////////////////////////////////////
@@ -38,7 +46,7 @@ function mostrarProductos(prd) {
 
 async function agregarAlCarrito(e) {
     let productos = await traerProductos();
-    // Para agregar un producto al carrito, lo filtro por el valor del tag imaginario prodID, que le asigné a cada botón de Comprar
+    // Para agregar un producto al carrito, lo filtro por el valor del tag inventado prodID, que le asigné a cada botón de Comprar
     let prodElegido = productos.filter(prd => prd.idprod == e.target.getAttribute('prodID'));
     let nombreProdElegido = prodElegido[0].nombre;
     mostrarToast(nombreProdElegido);
@@ -142,6 +150,11 @@ function vaciarCarrito() {
 }
 
 btnVaciarCarrito.addEventListener('click', vaciarCarrito);
+
+async function traerYmostrarProductos() {
+    let productos = await traerProductos()
+    mostrarProductos(productos)
+}
 
 ///////////////////////
 //// Local Storage ////
